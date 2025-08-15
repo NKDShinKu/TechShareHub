@@ -17,6 +17,8 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.373",
+    "@iconify/tailwind4": "^1.0.6",
     "@types/node": "^24.0.14",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vue/tsconfig": "^0.7.0",
