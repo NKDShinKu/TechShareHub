@@ -1,0 +1,27 @@
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  html,
+  body,
+  #app {
+    @apply w-full h-full;
+  }
+}
+
+@layer components {
+  /* 可以在这里定义自定义组件样式 */
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+}
+
+:root {
+  --bg-color-primary: var(--color-stone-50);
+  --bg-color-secondary: var(--color-stone-100);
+} 

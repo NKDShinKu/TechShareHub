@@ -25,12 +25,22 @@ const routes: Array<AppRouteRecordRaw> = [
         path: '/home',
         name: 'Home',
         component: () => import('@/views/home/index.vue'),
-        meta: { title: '首页' }
+        redirect: '/home/category/0',
+        meta: { title: '首页' },
+        children: [
+          {
+            path: 'category/:categoryId',
+            name: 'HomeCategory',
+            component: () => import('@/views/home/category/index.vue'),
+            meta: { title: '文章' },
+            props: true // 将路由参数作为 props 传递给组件
+          }
+        ]
       },
       {
         path: '/detail/:id',
         name: 'NoteDetail',
-        component: () => import('@/views/home/NoteDetail.vue'),
+        component: () => import('@/views/home/note-detail/index.vue'),
         meta: { title: '笔记详情' }
       },
       {
@@ -43,39 +53,129 @@ const routes: Array<AppRouteRecordRaw> = [
         path: '/creator',
         name: 'Creator',
         component: () => import('@/views/creator/index.vue'),
-        meta: { title: '创作中心', requiresAuth: true }
+        redirect: '/creator/overview',
+        meta: { title: '创作中心', requiresAuth: true },
+        children: [
+          {
+            path: 'overview',
+            name: 'CreatorOverview',
+            component: () => import('@/views/creator/overview/index.vue'),
+            meta: { title: '数据总览', requiresAuth: true }
+          },
+          {
+            path: 'manage',
+            name: 'CreatorManage',
+            component: () => import('@/views/creator/manage/index.vue'),
+            meta: { title: '发布管理', requiresAuth: true },
+          },
+          {
+            path: 'help',
+            name: 'CreatorHelp',
+            component: () => import('@/views/creator/help/index.vue'),
+            meta: { title: '帮助中心', requiresAuth: true }
+          }
+        ]
       },
       {
         path: '/message',
         name: 'Message',
         component: () => import('@/views/message/index.vue'),
-        meta: { title: '消息中心', requiresAuth: true }
+        redirect: '/message/system',
+        meta: { title: '消息中心', requiresAuth: true },
+        children: [
+          {
+            path: 'system',
+            name: 'MessageSystem',
+            component: () => import('@/views/message/system/index.vue'),
+            meta: { title: '系统通知', requiresAuth: true }
+          },
+          {
+            path: 'comments',
+            name: 'MessageComments',
+            component: () => import('@/views/message/comments/index.vue'),
+            meta: { title: '评论', requiresAuth: true }
+          },
+          {
+            path: 'likes',
+            name: 'MessageLikes',
+            component: () => import('@/views/message/likes/index.vue'),
+            meta: { title: '赞', requiresAuth: true }
+          },
+          {
+            path: 'favorites',
+            name: 'MessageFavorites',
+            component: () => import('@/views/message/favorites/index.vue'),
+            meta: { title: '收藏', requiresAuth: true }
+          }
+        ]
       },
       {
         path: '/user/:id',
         name: 'User',
         component: () => import('@/views/user/index.vue'),
-        meta: { title: '用户信息' }
+        redirect: (to) => `/user/${to.params.id}/articles`,
+        meta: { title: '个人中心' },
+        children: [
+          {
+            path: 'articles',
+            name: 'UserArticles',
+            component: () => import('@/views/user/articles/index.vue'),
+            meta: { title: '文章' }
+          },
+          {
+            path: 'history',
+            name: 'UserHistory',
+            component: () => import('@/views/user/history/index.vue'),
+            meta: { title: '浏览历史', requiresAuth: true }
+          },
+          {
+            path: 'favorites',
+            name: 'UserFavorites',
+            component: () => import('@/views/user/favorites/index.vue'),
+            meta: { title: '收藏', requiresAuth: true }
+          },
+          {
+            path: 'likes',
+            name: 'UserLikes',
+            component: () => import('@/views/user/likes/index.vue'),
+            meta: { title: '点赞', requiresAuth: true }
+          }
+        ]
       },
       {
         path: '/setting',
         name: 'Setting',
         component: () => import('@/views/setting/index.vue'),
-        meta: { title: '设置', requiresAuth: true }
+        redirect: '/setting/profile',
+        meta: { title: '设置', requiresAuth: true },
+        children: [
+          {
+            path: 'profile',
+            name: 'SettingProfile',
+            component: () => import('@/views/setting/profile/index.vue'),
+            meta: { title: '个人资料', requiresAuth: true }
+          },
+          {
+            path: 'account',
+            name: 'SettingAccount',
+            component: () => import('@/views/setting/account/index.vue'),
+            meta: { title: '账户设置', requiresAuth: true }
+          },
+          {
+            path: 'theme',
+            name: 'SettingTheme',
+            component: () => import('@/views/setting/theme/index.vue'),
+            meta: { title: '主题设置', requiresAuth: true }
+          }
+        ]
       }
     ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { title: '登录' }
   },
   // 404
   {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: () => import('@/views/error/404.vue'),
+    component: () => import('@/views/error/not-found/index.vue'),
     meta: { title: '页面未找到' }
   }
 ]

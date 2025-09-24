@@ -1,7 +1,8 @@
 <script setup lang="ts">
+defineOptions({ name: 'ErrorNotFoundPage' })
 </script>
 <template>
-  <div>空白页面</div>
+  <div>404 Not Found</div>
 </template>
 
 <style>
