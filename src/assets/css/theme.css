@@ -1,6 +1,36 @@
 @theme inline {
+  /* 背景色 */
   --color-bg-primary: var(--bg-color-primary);
   --color-bg-secondary: var(--bg-color-secondary);
+  --color-bg-tertiary: var(--bg-color-tertiary);
+
+  /* 主题色 */
+  --color-theme-primary: var(--theme-color-primary);
+  --color-theme-secondary: var(--theme-color-secondary);
+  --color-theme-tertiary: var(--theme-color-tertiary);
+
+  /* 主题色透明度变体 */
+  --color-theme-primary-10: var(--theme-color-primary-10);
+  --color-theme-primary-20: var(--theme-color-primary-20);
+  --color-theme-primary-hover: var(--theme-color-primary-hover);
+
+  /* 字体色 */
+  --color-font-primary: var(--font-color-primary);
+  --color-font-secondary: var(--font-color-secondary);
+  --color-font-tertiary: var(--font-color-tertiary);
+
+  /* 边框色 */
+  --color-border-primary: var(--border-color-primary);
+  --color-border-secondary: var(--border-color-secondary);
+
+  /* 状态色 */
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+  --color-info: var(--color-info);
+
+  /* 阴影色 */
+  --color-shadow: var(--shadow-color);
 }
 
 /* 亮色模式 */
