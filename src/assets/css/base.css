@@ -8,6 +8,25 @@
   #app {
     @apply w-full h-full bg-bg-tertiary;
   }
+
+  /* WebKit定制滚动条 - 强制应用 */
+  /* WebKit定制 */
+  *::-webkit-scrollbar {
+    @apply w-1 h-1 bg-transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+      @apply bg-font-tertiary/50 rounded-full;
+    }
+  *::-webkit-scrollbar-thumb:hover {
+    @apply bg-font-tertiary/70;
+  }
+
+  /* 页面级滚动条稍微大一点 */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0.4rem !important;
+    height: 0.4rem !important;
+  }
 }
 
 @layer components {
