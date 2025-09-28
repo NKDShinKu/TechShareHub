@@ -3,6 +3,10 @@ import { ref } from 'vue'
 import NavItem from './components/NavItem.vue'
 import SearchBox from './components/SearchBox.vue'
 import UserMenu from './components/UserMenu.vue'
+import { useHeaderVisibility } from '@/composables/useScrollUtils'
+
+// 使用 Header 显隐逻辑
+const { isScrollUp } = useHeaderVisibility(900) // 滚动 900px 后触发
 
 // 模拟当前用户状态
 const currentUser = ref({
@@ -72,7 +76,10 @@ const handleSearch = (query: string) => {
 </script>
 
 <template>
-  <header class="sticky top-0 z-50 bg-bg-primary border-b border-border-primary shadow-sm">
+  <header 
+    class="fixed top-0 left-0 right-0 z-50 bg-bg-primary border-b border-border-primary shadow-sm transition-transform duration-300 ease-in-out"
+    :class="{ '-translate-y-full': !isScrollUp }"
+  >
     <div class="max-w-400 mx-auto">
       <div class="flex items-center justify-between h-16">
         

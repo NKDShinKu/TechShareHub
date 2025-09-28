@@ -4,6 +4,10 @@ defineOptions({ name: 'CategorySidebar' })
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import CommonCard from '@/components/CommonCard.vue'
+import { useHeaderVisibility } from '@/composables/useScrollUtils'
+
+// 使用 Header 显隐逻辑
+const { isScrollUp } = useHeaderVisibility(900) // 滚动 900px 后触发
 
 interface Category {
   id: string
@@ -44,8 +48,8 @@ const handleCategoryClick = (categoryId: string) => {
 </script>
 
 <template>
-  <div class="w-60 sticky top-17">
-    <CommonCard title="分类" padding="p-1">
+  <div class="w-60 sticky  overflow-y-auto" :class="{ 'top-18': isScrollUp, 'top-3': !isScrollUp }">
+    <CommonCard :cus-class="'overflow-y-auto max-h-[calc(90vh-5rem)]'" padding="p-1">
       <div class="category-list">
         <div
           v-for="category in categories"

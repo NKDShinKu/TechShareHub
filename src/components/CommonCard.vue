@@ -7,6 +7,7 @@ interface CardProps {
   padding?: string
   shadow?: string
   bordered?: boolean
+  cusClass?: string
 }
 
 const props = withDefaults(defineProps<CardProps>(), {
@@ -22,10 +23,11 @@ const props = withDefaults(defineProps<CardProps>(), {
     :class="[
       props.padding,
       props.shadow,
-      props.bordered ? 'border border-border-primary' : ''
+      props.bordered ? 'border border-border-primary' : '',
+      props.cusClass
     ]"
   >
-    <!-- �片头部 -->
+    <!-- 卡片头部 -->
     <div v-if="title || $slots.header" class="mb-3">
       <slot name="header">
         <div v-if="title || subtitle" class="flex items-center justify-between">

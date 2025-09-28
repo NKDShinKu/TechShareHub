@@ -5,9 +5,12 @@ import Main from '@/layout/Main.vue';
 
 </script>
 <template>
-  <div class="w-full h-full flex flex-col">
+  <div class="w-full min-h-screen">
     <Header />
-    <Main class="flex-1" />
+    <!-- 为固定的 Header 预留空间 -->
+    <div class="pt-16">
+      <Main />
+    </div>
   </div>
 </template>
 
