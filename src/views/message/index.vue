@@ -1,53 +1,63 @@
 <script setup lang="ts">
-// 消息中心主组件
+import { useHeaderVisibility } from '@/composables/useScrollUtils'
+
+// 使用 Header 显隐逻辑
+const { isScrollUp } = useHeaderVisibility(900) // 滚动 900px 后触发
+defineOptions({ name: 'MessageCenter' })
+
+// 消息菜单配置
+const messageMenuItems = [
+  { to: '/message/system', label: '系统通知', count: 3 },
+  { to: '/message/comments', label: '评论', count: 12 },
+  { to: '/message/likes', label: '点赞', count: 8 },
+  { to: '/message/favorites', label: '收藏', count: 5 }
+]
 </script>
+
 <template>
-  <div class="message-page">
-    <div class="message-header">
-      <h1>消息中心</h1>
-      <div class="message-tabs">
-        <router-link to="/message/system" class="message-tab">系统通知</router-link>
-        <router-link to="/message/comments" class="message-tab">评论</router-link>
-        <router-link to="/message/likes" class="message-tab">赞</router-link>
-        <router-link to="/message/favorites" class="message-tab">收藏</router-link>
+  <div class="message-center">
+    <!-- 消息中心导航栏 -->
+    <nav class="fixed w-full h-15 top-15 z-1 left-0 bg-bg-primary border-b border-border-primary shadow-sm  transition-transform duration-300 ease-in-out"
+    :class="{ '-translate-y-full': !isScrollUp }">
+      <div class="max-w-400 mx-auto">
+        <div class="px-4 py-3">
+          <!-- 消息菜单 -->
+          <div class="flex items-center space-x-6 overflow-x-auto">
+            <router-link
+              v-for="item in messageMenuItems"
+              :key="item.to"
+              :to="item.to"
+              class="flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap"
+              :class="[
+                'text-font-secondary hover:text-theme-primary hover:bg-theme-primary-10',
+                'border border-transparent hover:border-theme-primary-20'
+              ]"
+              active-class="!text-theme-primary !bg-theme-primary-10 !border-theme-primary-20"
+            >
+              
+              <!-- 标签 -->
+              <span>{{ item.label }}</span>
+              
+              <!-- 消息数量徽章 -->
+              <span 
+                v-if="item.count > 0"
+                class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-bold text-white bg-red-500 rounded-full min-w-[18px] h-4"
+              >
+                {{ item.count > 99 ? '99+' : item.count }}
+              </span>
+            </router-link>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="message-content">
+    </nav>
+
+    <!-- 消息内容区域 -->
+    <main class="max-w-400 mx-auto p-4 mt-15">
       <router-view />
-    </div>
+    </main>
   </div>
 </template>
 
 <style scoped>
-.message-page {
-  padding: 1rem;
-}
-
-.message-header {
-  margin-bottom: 2rem;
-}
-
-.message-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.message-tab {
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: #666;
-  border-bottom: 2px solid transparent;
-}
-
-.message-tab:hover,
-.message-tab.router-link-active {
-  color: #007acc;
-  border-bottom-color: #007acc;
-}
-
-.message-content {
-  margin-top: 1rem;
-}
+/* 使用 Tailwind CSS 类，无需额外样式 */
 </style>
