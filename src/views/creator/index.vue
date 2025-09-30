@@ -1,52 +1,38 @@
 <script setup lang="ts">
-// 创作中心主组件
+defineOptions({ name: 'CreatorCenter' })
+
+import { useRouter } from 'vue-router'
+import CreatorSidebar from './components/CreatorSidebar.vue'
+
+const router = useRouter()
+
+// 处理菜单选择
+const handleMenuSelect = (menuPath: string) => {
+  // 如果是外部链接或需要特殊处理的路由
+  if (menuPath.startsWith('/note')) {
+    router.push(menuPath)
+  } else {
+    // 内部路由导航
+    router.push(menuPath)
+  }
+}
 </script>
+
 <template>
-  <div class="creator-page">
-    <div class="creator-header">
-      <h1>创作中心</h1>
-      <div class="creator-tabs">
-        <router-link to="/creator/overview" class="creator-tab">数据总览</router-link>
-        <router-link to="/creator/manage" class="creator-tab">发布管理</router-link>
-        <router-link to="/creator/help" class="creator-tab">帮助中心</router-link>
+  <div class="p-4 max-w-screen-2xl mx-auto">
+    <!-- 创作中心布局容器 -->
+    <div class="flex items-start gap-6 min-h-[calc(100vh-2rem)] lg:flex-row flex-col">
+      <!-- 左侧创作中心侧边栏 -->
+      <CreatorSidebar @menu-select="handleMenuSelect" />
+      
+      <!-- 右侧内容区 - 这里渲染子路由 -->
+      <div class="flex-1 mx-0 lg:mx-6">
+        <router-view />
       </div>
-    </div>
-    <div class="creator-content">
-      <router-view />
     </div>
   </div>
 </template>
 
 <style scoped>
-.creator-page {
-  padding: 1rem;
-}
-
-.creator-header {
-  margin-bottom: 2rem;
-}
-
-.creator-tabs {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.creator-tab {
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-  color: #666;
-  border-bottom: 2px solid transparent;
-}
-
-.creator-tab:hover,
-.creator-tab.router-link-active {
-  color: #007acc;
-  border-bottom-color: #007acc;
-}
-
-.creator-content {
-  margin-top: 1rem;
-}
+/* 使用 Tailwind CSS 类，无需额外样式 */
 </style>

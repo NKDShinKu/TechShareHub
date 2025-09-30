@@ -29,6 +29,24 @@
   --color-danger: var(--color-danger);
   --color-info: var(--color-info);
 
+  /* 状态色悬停态 */
+  --color-success-hover: var(--color-success-hover);
+  --color-warning-hover: var(--color-warning-hover);
+  --color-danger-hover: var(--color-danger-hover);
+  --color-info-hover: var(--color-info-hover);
+
+  /* 状态色浅色背景 */
+  --color-success-light: var(--color-success-light);
+  --color-warning-light: var(--color-warning-light);
+  --color-danger-light: var(--color-danger-light);
+  --color-info-light: var(--color-info-light);
+
+  /* 状态色文字 */
+  --color-success-text: var(--color-success-text);
+  --color-warning-text: var(--color-warning-text);
+  --color-danger-text: var(--color-danger-text);
+  --color-info-text: var(--color-info-text);
+
   /* 阴影色 */
   --color-shadow: var(--shadow-color);
 }
