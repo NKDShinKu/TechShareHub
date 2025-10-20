@@ -10,27 +10,19 @@
       <!-- 状态筛选标签 -->
       <div class="mb-6">
         <div class="inline-flex items-center gap-2 bg-bg-primary p-1 rounded-lg border border-border-primary">
-          <button
-            v-for="tab in statusTabs"
-            :key="tab.value"
-            @click="switchTab(tab.value)"
-            :class="[
-              'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200',
-              currentStatus === tab.value
-                ? 'bg-theme-primary text-white shadow-sm'
-                : 'text-font-secondary hover:text-font-primary hover:bg-bg-secondary'
-            ]"
-          >
+          <button v-for="tab in statusTabs" :key="tab.value" @click="switchTab(tab.value)" :class="[
+            'px-4 py-2 text-sm font-medium rounded-md transition-all duration-200',
+            currentStatus === tab.value
+              ? 'bg-theme-primary text-white shadow-sm'
+              : 'text-font-secondary hover:text-font-primary hover:bg-bg-secondary'
+          ]">
             {{ tab.label }}
-            <span 
-              v-if="tab.count > 0"
-              :class="[
-                'ml-1 px-1.5 py-0.5 text-xs rounded-full',
-                currentStatus === tab.value
-                  ? 'bg-white/20 text-white'
-                  : 'bg-bg-secondary text-font-tertiary'
-              ]"
-            >
+            <span v-if="tab.count > 0" :class="[
+              'ml-1 px-1.5 py-0.5 text-xs rounded-full',
+              currentStatus === tab.value
+                ? 'bg-white/20 text-white'
+                : 'bg-bg-secondary text-font-tertiary'
+            ]">
               {{ tab.count }}
             </span>
           </button>
@@ -42,70 +34,50 @@
         <div class="flex items-center gap-4">
           <!-- 搜索框 -->
           <div class="relative">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="搜索文章或笔记..."
-              class="w-64 pl-10 pr-4 py-2 bg-bg-secondary border border-border-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent"
-            >
-            <i class="icon-[material-symbols--search] absolute left-3 top-1/2 transform -translate-y-1/2 text-font-tertiary text-lg"></i>
+            <input v-model="searchQuery" type="text" placeholder="搜索文章或笔记..."
+              class="w-64 pl-10 pr-4 py-2 bg-bg-secondary border border-border-primary rounded-lg focus:outline-none focus:ring-2 focus:ring-theme-primary focus:border-transparent">
+            <i
+              class="icon-[material-symbols--search] absolute left-3 top-1/2 transform -translate-y-1/2 text-font-tertiary text-lg"></i>
           </div>
 
           <!-- 排序选择 -->
-          <Dropdown
-            v-model="sortBy"
-            :options="sortOptions"
-            placeholder="排序方式"
-            button-class="w-32"
-            @change="handleSortChange"
-          />
+          <Dropdown v-model="sortBy" :options="sortOptions" placeholder="排序方式" button-class="w-32"
+            @change="handleSortChange" />
         </div>
 
         <div class="flex items-center gap-3">
           <!-- 批量操作 -->
-          <button
-            v-if="selectedItems.length > 0"
-            @click="showBatchActions = !showBatchActions"
-            class="px-4 py-2 bg-bg-secondary hover:bg-bg-tertiary text-font-secondary rounded-lg font-medium transition-colors"
-          >
+          <button v-if="selectedItems.length > 0" @click="showBatchActions = !showBatchActions"
+            class="px-4 py-2 bg-bg-secondary hover:bg-bg-tertiary text-font-secondary rounded-lg font-medium transition-colors">
             批量操作 ({{ selectedItems.length }})
           </button>
 
           <!-- 新建按钮 -->
-          <router-link
-            to="/note"
-            class="px-4 py-2 bg-theme-primary hover:bg-theme-primary-hover text-white rounded-lg font-medium transition-colors flex items-center"
-          >
+          <button
+            @click="showPublishModal = true"
+            class="px-4 py-2 bg-theme-primary hover:bg-theme-primary-hover text-white rounded-lg font-medium transition-colors flex items-center">
             <i class="icon-[material-symbols--add] mr-2"></i>
-            写笔记
-          </router-link>
+            发布笔记
+          </button>
         </div>
       </div>
 
       <!-- 批量操作面板 -->
-      <div 
-        v-if="showBatchActions && selectedItems.length > 0"
-        class="mb-4 p-4 bg-info-light border border-info rounded-lg"
-      >
+      <div v-if="showBatchActions && selectedItems.length > 0"
+        class="mb-4 p-4 bg-info-light border border-info rounded-lg">
         <div class="flex items-center gap-3">
           <span class="text-sm text-info-text">已选择 {{ selectedItems.length }} 项</span>
           <div class="flex gap-2">
-            <button
-              @click="batchDelete"
-              class="px-3 py-1 bg-danger hover:bg-danger-hover text-white text-sm rounded transition-colors"
-            >
+            <button @click="batchDelete"
+              class="px-3 py-1 bg-danger hover:bg-danger-hover text-white text-sm rounded transition-colors">
               删除
             </button>
-            <button
-              @click="batchPublish"
-              class="px-3 py-1 bg-success hover:bg-success-hover text-white text-sm rounded transition-colors"
-            >
+            <button @click="batchPublish"
+              class="px-3 py-1 bg-success hover:bg-success-hover text-white text-sm rounded transition-colors">
               发布
             </button>
-            <button
-              @click="clearSelection"
-              class="px-3 py-1 bg-font-tertiary hover:bg-font-secondary text-white text-sm rounded transition-colors"
-            >
+            <button @click="clearSelection"
+              class="px-3 py-1 bg-font-tertiary hover:bg-font-secondary text-white text-sm rounded transition-colors">
               取消选择
             </button>
           </div>
@@ -120,26 +92,17 @@
           </div>
           <h3 class="text-lg font-medium text-font-primary mb-2">暂无内容</h3>
           <p class="text-font-secondary mb-6">开始创作您的第一篇文章或笔记吧</p>
-          <router-link
-            to="/note"
-            class="inline-flex items-center px-4 py-2 bg-theme-primary hover:bg-theme-primary-hover text-white rounded-lg font-medium transition-colors"
-          >
+          <router-link to="/note"
+            class="inline-flex items-center px-4 py-2 bg-theme-primary hover:bg-theme-primary-hover text-white rounded-lg font-medium transition-colors">
             <i class="icon-[material-symbols--add] mr-2"></i>
             写笔记
           </router-link>
         </div>
 
         <div v-else>
-          <ContentItem
-            v-for="item in filteredContent"
-            :key="item.id"
-            :content="item"
-            :selected="selectedItems.includes(item.id)"
-            @select="handleContentSelect"
-            @edit="handleContentEdit"
-            @delete="handleContentDelete"
-            @click="handleContentClick"
-          />
+          <ContentItem v-for="item in filteredContent" :key="item.id" :content="item"
+            :selected="selectedItems.includes(item.id)" @select="handleContentSelect" @edit="handleContentEdit"
+            @delete="handleContentDelete" @click="handleContentClick" />
         </div>
       </div>
 
@@ -149,36 +112,34 @@
           共 {{ totalCount }} 条记录，当前显示第 {{ currentPage }} 页
         </p>
         <div class="flex items-center gap-2">
-          <button
-            @click="currentPage > 1 && (currentPage -= 1)"
-            :disabled="currentPage <= 1"
-            :class="[
-              'px-3 py-2 text-sm border rounded-lg transition-colors',
-              currentPage <= 1
-                ? 'bg-bg-secondary text-font-tertiary border-border-secondary cursor-not-allowed'
-                : 'bg-bg-primary text-font-secondary border-border-primary hover:bg-bg-secondary'
-            ]"
-          >
+          <button @click="currentPage > 1 && (currentPage -= 1)" :disabled="currentPage <= 1" :class="[
+            'px-3 py-2 text-sm border rounded-lg transition-colors',
+            currentPage <= 1
+              ? 'bg-bg-secondary text-font-tertiary border-border-secondary cursor-not-allowed'
+              : 'bg-bg-primary text-font-secondary border-border-primary hover:bg-bg-secondary'
+          ]">
             上一页
           </button>
           <span class="px-3 py-2 text-sm text-font-tertiary">
             {{ currentPage }} / {{ totalPages }}
           </span>
-          <button
-            @click="currentPage < totalPages && (currentPage += 1)"
-            :disabled="currentPage >= totalPages"
-            :class="[
-              'px-3 py-2 text-sm border rounded-lg transition-colors',
-              currentPage >= totalPages
-                ? 'bg-bg-secondary text-font-tertiary border-border-secondary cursor-not-allowed'
-                : 'bg-bg-primary text-font-secondary border-border-primary hover:bg-bg-secondary'
-            ]"
-          >
+          <button @click="currentPage < totalPages && (currentPage += 1)" :disabled="currentPage >= totalPages" :class="[
+            'px-3 py-2 text-sm border rounded-lg transition-colors',
+            currentPage >= totalPages
+              ? 'bg-bg-secondary text-font-tertiary border-border-secondary cursor-not-allowed'
+              : 'bg-bg-primary text-font-secondary border-border-primary hover:bg-bg-secondary'
+          ]">
             下一页
           </button>
         </div>
       </div>
     </div>
+
+    <!-- 发布笔记弹窗 -->
+    <PublishNoteModal
+      v-model="showPublishModal"
+      @confirm="handlePublishNote"
+    />
   </div>
 </template>
 
@@ -189,6 +150,7 @@ import { computed, ref, reactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Dropdown from '../../../components/ui/Dropdown.vue'
 import ContentItem from '../../../components/creator/ContentItem.vue'
+import PublishNoteModal from './components/PublishNoteModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -221,6 +183,9 @@ const sortBy = ref('createTime')
 // 批量操作
 const selectedItems = ref<string[]>([])
 const showBatchActions = ref(false)
+
+// 发布笔记弹窗
+const showPublishModal = ref(false)
 
 // 分页
 const currentPage = ref(1)
@@ -309,7 +274,7 @@ const filteredContent = computed(() => {
   // 搜索筛选
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(item => 
+    filtered = filtered.filter(item =>
       item.title.toLowerCase().includes(query) ||
       item.summary.toLowerCase().includes(query)
     )
@@ -391,50 +356,6 @@ const handleContentClick = (content: any) => {
   }
 }
 
-const getStatusLabel = (status: string) => {
-  const statusMap = {
-    published: '已发布',
-    pending: '审核中',
-    rejected: '未通过',
-    draft: '草稿'
-  }
-  return statusMap[status as keyof typeof statusMap] || status
-}
-
-const getStatusStyle = (status: string) => {
-  const styleMap = {
-    published: 'bg-success-light text-success-text',
-    pending: 'bg-warning-light text-warning-text',
-    rejected: 'bg-danger-light text-danger-text',
-    draft: 'bg-bg-secondary text-font-tertiary'
-  }
-  return styleMap[status as keyof typeof styleMap] || 'bg-bg-secondary text-font-tertiary'
-}
-
-const formatDate = (date: Date) => {
-  const now = new Date()
-  const diffTime = now.getTime() - date.getTime()
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
-
-  if (diffDays === 0) {
-    return '今天'
-  } else if (diffDays === 1) {
-    return '昨天'
-  } else if (diffDays < 7) {
-    return `${diffDays}天前`
-  } else if (diffDays < 30) {
-    return `${Math.floor(diffDays / 7)}周前`
-  } else {
-    return date.toLocaleDateString('zh-CN', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric' 
-    })
-  }
-}
-
-
-
 // 批量操作
 const batchDelete = () => {
   if (confirm(`确认删除选中的 ${selectedItems.value.length} 项内容吗？`)) {
@@ -464,6 +385,31 @@ const batchPublish = () => {
 const clearSelection = () => {
   selectedItems.value = []
   showBatchActions.value = false
+}
+
+// 处理发布笔记
+const handlePublishNote = (note: any) => {
+  console.log('选择发布笔记:', note)
+  // 这里可以调用 API 将笔记发布
+  // 发布成功后添加到内容列表
+  const newContent: ContentItem = {
+    id: note.id,
+    title: note.title,
+    summary: note.summary || '暂无摘要',
+    type: 'note',
+    status: 'pending', // 发布后进入审核中状态
+    cover: '',
+    views: 0,
+    likes: 0,
+    comments: 0,
+    createTime: new Date(),
+    updateTime: note.updateTime
+  }
+  
+  contentList.unshift(newContent)
+  
+  // 提示用户
+  alert(`笔记「${note.title}」已提交发布，等待审核`)
 }
 
 // 监听路由变化，如果没有status参数则默认设置为all
