@@ -40,7 +40,7 @@ const routes: Array<AppRouteRecordRaw> = [
       {
         path: '/detail/:id',
         name: 'NoteDetail',
-        component: () => import('@/views/home/note-detail/index.vue'),
+        component: () => import('@/views/note-detail/index.vue'),
         meta: { title: '笔记详情' }
       },
       {
