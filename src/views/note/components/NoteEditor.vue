@@ -38,8 +38,39 @@
           <i class="icon-[material-symbols--save-outline]"></i>
           <span>保存</span>
         </button>
+
+        <!-- 导入按钮 -->
+        <button
+          @click="handleImport"
+          :disabled="isSaving"
+          class="px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 bg-bg-secondary hover:bg-bg-tertiary text-font-primary border border-border-primary"
+          title="导入 Markdown 文档"
+        >
+          <i class="icon-[material-symbols--upload]"></i>
+          <span>导入</span>
+        </button>
+
+        <!-- 导出按钮 -->
+        <button
+          @click="handleExport"
+          :disabled="isSaving"
+          class="px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 bg-bg-secondary hover:bg-bg-tertiary text-font-primary border border-border-primary"
+          title="导出 Markdown 文档"
+        >
+          <i class="icon-[material-symbols--download]"></i>
+          <span>导出</span>
+        </button>
       </div>
     </div>
+
+    <!-- 隐藏的文件输入 -->
+    <input
+      ref="fileInputRef"
+      type="file"
+      accept=".md,.markdown,.txt"
+      style="display: none"
+      @change="handleFileSelect"
+    />
 
     <!-- ByteMD 编辑器 -->
     <div class="editor-body flex-1 overflow-hidden">
@@ -104,6 +135,7 @@ const noteContent = ref('')
 const isSaving = ref(false)
 const lastSavedTime = ref('')
 const hasChanges = ref(false)
+const fileInputRef = ref<HTMLInputElement | null>(null)
 
 // ByteMD 插件配置 - 包含所有官方插件
 const plugins = [
@@ -200,6 +232,107 @@ const handleSave = async (isAutoSave = false) => {
     alert('保存失败，请重试')
   } finally {
     isSaving.value = false
+  }
+}
+
+// 导出 Markdown 文档
+const handleExport = () => {
+  try {
+    // 创建包含标题和内容的完整 Markdown 文档
+    const markdownContent = `# ${noteTitle.value || '无标题笔记'}\n\n${noteContent.value}`
+    
+    // 创建 Blob 对象
+    const blob = new Blob([markdownContent], { type: 'text/markdown;charset=utf-8' })
+    
+    // 创建下载链接
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    
+    // 生成文件名：使用笔记标题，去除特殊字符
+    const safeTitle = (noteTitle.value || '无标题笔记')
+      .replace(/[\\/:*?"<>|]/g, '_')
+      .substring(0, 100) // 限制长度
+    link.download = `${safeTitle}.md`
+    
+    // 触发下载
+    document.body.appendChild(link)
+    link.click()
+    
+    // 清理
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+    
+    ElMessage.success('导出成功')
+  } catch (error) {
+    console.error('导出失败:', error)
+    ElMessage.error('导出失败，请重试')
+  }
+}
+
+// 触发导入文件选择
+const handleImport = () => {
+  if (hasChanges.value) {
+    ElMessageBox.confirm(
+      '导入新文档会覆盖当前未保存的内容，是否继续？',
+      '确认导入',
+      {
+        confirmButtonText: '继续导入',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+    )
+      .then(() => {
+        fileInputRef.value?.click()
+      })
+      .catch(() => {
+        // 用户取消
+      })
+  } else {
+    fileInputRef.value?.click()
+  }
+}
+
+// 处理文件选择
+const handleFileSelect = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  
+  if (!file) return
+  
+  try {
+    // 检查文件大小（限制为 10MB）
+    if (file.size > 10 * 1024 * 1024) {
+      ElMessage.error('文件大小不能超过 10MB')
+      return
+    }
+    
+    // 读取文件内容
+    const text = await file.text()
+    
+    // 提取标题和内容
+    // 如果第一行是 # 开头，则作为标题
+    const lines = text.split('\n')
+    let title = noteTitle.value
+    let content = text
+    
+    if (lines[0]?.startsWith('# ')) {
+      title = lines[0].substring(2).trim()
+      content = lines.slice(1).join('\n').trim()
+    }
+    
+    // 更新内容
+    noteTitle.value = title || file.name.replace(/\.(md|markdown|txt)$/i, '')
+    noteContent.value = content
+    hasChanges.value = true
+    
+    ElMessage.success(`成功导入文档：${file.name}`)
+    
+    // 清空文件输入，允许重复导入同一文件
+    target.value = ''
+  } catch (error) {
+    console.error('导入失败:', error)
+    ElMessage.error('导入失败，请检查文件格式')
   }
 }
 

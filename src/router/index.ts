@@ -206,6 +206,7 @@ router.beforeEach((to, _from, next) => {
   // 简单权限校验
   if (meta?.requiresAuth && !isAuthenticated()) {
     // 未登录则重定向到登录页，并保留目标路径
+    ElMessage.error('请先登录以访问该页面')
     return next({ name: 'Login', query: { redirect: to.fullPath } })
   }
 
