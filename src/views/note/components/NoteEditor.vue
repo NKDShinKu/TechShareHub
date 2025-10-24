@@ -383,4 +383,8 @@ onUnmounted(() => {
   height: calc(100vh - 10.5rem);
   border: none;
 }
+
+:deep(.bytemd-fullscreen.bytemd) {
+  z-index: 1000;
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="note-page mt-2 h-[calc(100vh-6rem)] flex overflow-hidden bg-bg-tertiary">
+  <div class="note-page mt-2 w-full h-[calc(100vh-6rem)] flex overflow-hidden bg-bg-tertiary">
     <!-- 左侧边栏 -->
     <div class="w-64 flex-shrink-0">
       <NoteSidebar
