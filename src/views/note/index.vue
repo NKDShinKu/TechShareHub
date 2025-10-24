@@ -6,9 +6,11 @@
         :folders="folders"
         :selected-note-id="selectedNote?.id"
         @add-folder="handleAddFolder"
+        @edit-folder="handleEditFolder"
         @delete-folder="handleDeleteFolder"
         @add-note="handleAddNote"
         @delete-note="handleDeleteNote"
+        @move-note="handleMoveNote"
         @select-note="handleSelectNote"
       />
     </div>
@@ -97,6 +99,14 @@ const handleAddFolder = (name: string) => {
   folders.push(newFolder)
 }
 
+// 编辑文件夹
+const handleEditFolder = (folderId: string, newName: string) => {
+  const folder = folders.find(f => f.id === folderId)
+  if (folder) {
+    folder.name = newName
+  }
+}
+
 // 删除文件夹
 const handleDeleteFolder = (folderId: string) => {
   const index = folders.findIndex(f => f.id === folderId)
@@ -139,6 +149,31 @@ const handleDeleteNote = (folderId: string, noteId: string) => {
       selectedNote.value = null
     }
     folder.notes.splice(index, 1)
+  }
+}
+
+// 移动笔记
+const handleMoveNote = (noteId: string, fromFolderId: string, toFolderId: string) => {
+  const fromFolder = folders.find(f => f.id === fromFolderId)
+  const toFolder = folders.find(f => f.id === toFolderId)
+  
+  if (!fromFolder || !toFolder) return
+  
+  const noteIndex = fromFolder.notes.findIndex(n => n.id === noteId)
+  if (noteIndex === -1) return
+  
+  const note = fromFolder.notes[noteIndex]
+  
+  // 从原文件夹删除
+  fromFolder.notes.splice(noteIndex, 1)
+  
+  // 添加到目标文件夹
+  note.folderId = toFolderId
+  toFolder.notes.push(note)
+  
+  // 如果是当前选中的笔记，更新 folderId
+  if (selectedNote.value && selectedNote.value.id === noteId) {
+    selectedNote.value.folderId = toFolderId
   }
 }
 

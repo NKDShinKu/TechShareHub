@@ -10,10 +10,13 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
+      imports: ['vue'],
       resolvers: [ElementPlusResolver()],
+      dts: 'auto-imports.d.ts',
     }),
     Components({
       resolvers: [ElementPlusResolver()],
+      dts: 'components.d.ts',
     }),
     tailwindcss(),
   ],

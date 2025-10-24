@@ -95,4 +95,13 @@
 
   /* 阴影色 */
   --shadow-color: oklch(0.216 0.006 56.043 / 0.1);
-} 
+
+  /*  element-plus 主题色覆盖 */
+  --el-color-primary: oklch(0.704 0.14 182.503) !important;
+  --el-color-primary-light-3: oklch(0.704 0.14 182.503 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.704 0.14 182.503 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.704 0.14 182.503 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.704 0.14 182.503 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.704 0.14 182.503 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.60 0.14 182.503) !important;
+}   
