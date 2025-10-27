@@ -149,7 +149,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ElMessage } from 'element-plus'
 import CommonCard from '@/components/CommonCard.vue'
 import { useThemeStore, type ThemeColor } from '@/store'
 
