@@ -21,7 +21,7 @@ const handleMenuSelect = (menuPath: string) => {
 <template>
   <div class="p-4 max-w-screen-2xl mx-auto">
     <!-- 创作中心布局容器 -->
-    <div class="flex items-start gap-6 min-h-[calc(100vh-2rem)] lg:flex-row flex-col">
+    <div class="flex items-start gap-6 min-h-[calc(100vh-6rem)] lg:flex-row flex-col">
       <!-- 左侧创作中心侧边栏 -->
       <CreatorSidebar @menu-select="handleMenuSelect" />
       
