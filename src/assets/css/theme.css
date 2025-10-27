@@ -52,15 +52,225 @@
 }
 
 /* 亮色模式 */
-[data-theme="light"] {
-  --color-brand: #1DA1F2;
-  --color-bg: #ffffff;
-  --color-tx: #333333;
-}
+[data-theme="light"],
+[data-theme^="light-"] {
+  /* 背景色（主背景、卡片背景） */
+  --bg-color-primary: oklch(0.985 0 0);
+  --bg-color-secondary: oklch(0.97 0 0);
+  --bg-color-tertiary: oklch(0.922 0 0);
+
+  /* 字体色 */
+  --font-color-primary: oklch(0.216 0.006 56.043);
+  --font-color-secondary: oklch(0.374 0.01 67.558);
+  --font-color-tertiary: oklch(0.553 0.013 58.071);
+
+  /* 边框色 */
+  --border-color-primary: oklch(0.89 0.005 85.715);
+  --border-color-secondary: oklch(0.95 0.003 85.715);
+
+  /* 阴影色 */
+  --shadow-color: oklch(0.216 0.006 56.043 / 0.1);
+}  
 
 /* 深色模式 */
-[data-theme="dark"] {
-  --color-brand: #ff9800;
-  --color-bg: #1a1a1a;
-  --color-tx: #f5f5f5;
+[data-theme="dark"],
+[data-theme^="dark-"] {
+  /* 变量与亮色对应 */
+  --bg-color-primary: oklch(36.733% 0.00165 106.872);
+  --bg-color-secondary: oklch(40.194% 0.00352 84.495);
+  --bg-color-tertiary: oklch(0.553 0.013 58.071);
+
+  /* 字体色 */
+  --font-color-primary: oklch(0.89 0.005 85.715);
+  --font-color-secondary: oklch(0.95 0.003 85.715);
+  --font-color-tertiary: oklch(79.34% 0.0026 47.371);
+
+  /* 边框色 */
+  --border-color-primary: oklch(49.641% 0.00333 84.464);
+  --border-color-secondary: oklch(48.251% 0.00199 67.155);
+
+  /* 阴影色 */
+  --shadow-color: oklch(0.216 0.006 56.043 / 0.1);
+}
+
+/* 绿色主题 */
+[data-theme="green"],
+[data-theme$="-green"] {
+  /* 主题色 */
+  --theme-color-primary: oklch(0.704 0.14 182.503);
+  --theme-color-secondary: oklch(0.91 0.096 180.426);
+  --theme-color-tertiary: oklch(0.953 0.051 180.801);
+
+  /* 主题色透明度变体 */
+  --theme-color-primary-10: oklch(0.704 0.14 182.503 / 0.1);
+  --theme-color-primary-20: oklch(0.704 0.14 182.503 / 0.2);
+  --theme-color-primary-hover: oklch(0.65 0.14 182.503);
+
+  /*  element-plus 主题色覆盖 */
+  --el-color-primary: oklch(0.704 0.14 182.503) !important;
+  --el-color-primary-light-3: oklch(0.704 0.14 182.503 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.704 0.14 182.503 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.704 0.14 182.503 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.704 0.14 182.503 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.704 0.14 182.503 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.60 0.14 182.503) !important;
+} 
+
+/* 蓝色主题 */
+[data-theme="blue"],
+[data-theme$="-blue"] { 
+  /* 主题色 */
+  --theme-color-primary: oklch(0.517 0.12 260);
+  --theme-color-secondary: oklch(0.75 0.1 250);
+  --theme-color-tertiary: oklch(0.85 0.08 240);
+
+  /* 主题色透明度变体 */
+  --theme-color-primary-10: oklch(0.517 0.12 260 / 0.1);
+  --theme-color-primary-20: oklch(0.517 0.12 260 / 0.2);
+  --theme-color-primary-hover: oklch(0.47 0.12 260);
+
+  /*  element-plus 主题色覆盖 */
+  --el-color-primary: oklch(0.517 0.12 260) !important;
+  --el-color-primary-light-3: oklch(0.517 0.12 260 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.517 0.12 260 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.517 0.12 260 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.517 0.12 260 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.517 0.12 260 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.44 0.12 260) !important;
+}
+
+/* 紫色主题 */
+[data-theme$="-purple"] {
+  --theme-color-primary: oklch(0.60 0.16 300);
+  --theme-color-secondary: oklch(0.80 0.12 300);
+  --theme-color-tertiary: oklch(0.90 0.08 300);
+  --theme-color-primary-10: oklch(0.60 0.16 300 / 0.1);
+  --theme-color-primary-20: oklch(0.60 0.16 300 / 0.2);
+  --theme-color-primary-hover: oklch(0.54 0.16 300);
+  --el-color-primary: oklch(0.60 0.16 300) !important;
+  --el-color-primary-light-3: oklch(0.60 0.16 300 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.60 0.16 300 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.60 0.16 300 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.60 0.16 300 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.60 0.16 300 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.52 0.16 300) !important;
+}
+
+/* 粉色主题 */
+[data-theme$="-pink"] {
+  --theme-color-primary: oklch(0.64 0.18 350);
+  --theme-color-secondary: oklch(0.82 0.14 350);
+  --theme-color-tertiary: oklch(0.92 0.09 350);
+  --theme-color-primary-10: oklch(0.64 0.18 350 / 0.1);
+  --theme-color-primary-20: oklch(0.64 0.18 350 / 0.2);
+  --theme-color-primary-hover: oklch(0.58 0.18 350);
+  --el-color-primary: oklch(0.64 0.18 350) !important;
+  --el-color-primary-light-3: oklch(0.64 0.18 350 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.64 0.18 350 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.64 0.18 350 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.64 0.18 350 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.64 0.18 350 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.56 0.18 350) !important;
+}
+
+/* 橙色主题 */
+[data-theme$="-orange"] {
+  --theme-color-primary: oklch(0.68 0.15 40);
+  --theme-color-secondary: oklch(0.84 0.11 40);
+  --theme-color-tertiary: oklch(0.93 0.07 40);
+  --theme-color-primary-10: oklch(0.68 0.15 40 / 0.1);
+  --theme-color-primary-20: oklch(0.68 0.15 40 / 0.2);
+  --theme-color-primary-hover: oklch(0.62 0.15 40);
+  --el-color-primary: oklch(0.68 0.15 40) !important;
+  --el-color-primary-light-3: oklch(0.68 0.15 40 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.68 0.15 40 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.68 0.15 40 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.68 0.15 40 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.68 0.15 40 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.60 0.15 40) !important;
+}
+
+/* 红色主题 */
+[data-theme$="-red"] {
+  --theme-color-primary: oklch(0.56 0.20 25);
+  --theme-color-secondary: oklch(0.78 0.15 25);
+  --theme-color-tertiary: oklch(0.90 0.10 25);
+  --theme-color-primary-10: oklch(0.56 0.20 25 / 0.1);
+  --theme-color-primary-20: oklch(0.56 0.20 25 / 0.2);
+  --theme-color-primary-hover: oklch(0.50 0.20 25);
+  --el-color-primary: oklch(0.56 0.20 25) !important;
+  --el-color-primary-light-3: oklch(0.56 0.20 25 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.56 0.20 25 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.56 0.20 25 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.56 0.20 25 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.56 0.20 25 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.48 0.20 25) !important;
+}
+
+/* 黄色主题 */
+[data-theme$="-yellow"] {
+  --theme-color-primary: oklch(0.76 0.14 85);
+  --theme-color-secondary: oklch(0.88 0.10 85);
+  --theme-color-tertiary: oklch(0.95 0.06 85);
+  --theme-color-primary-10: oklch(0.76 0.14 85 / 0.1);
+  --theme-color-primary-20: oklch(0.76 0.14 85 / 0.2);
+  --theme-color-primary-hover: oklch(0.70 0.14 85);
+  --el-color-primary: oklch(0.76 0.14 85) !important;
+  --el-color-primary-light-3: oklch(0.76 0.14 85 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.76 0.14 85 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.76 0.14 85 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.76 0.14 85 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.76 0.14 85 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.68 0.14 85) !important;
+}
+
+/* 青色主题 */
+[data-theme$="-teal"] {
+  --theme-color-primary: oklch(0.66 0.12 180);
+  --theme-color-secondary: oklch(0.83 0.09 180);
+  --theme-color-tertiary: oklch(0.93 0.05 180);
+  --theme-color-primary-10: oklch(0.66 0.12 180 / 0.1);
+  --theme-color-primary-20: oklch(0.66 0.12 180 / 0.2);
+  --theme-color-primary-hover: oklch(0.60 0.12 180);
+  --el-color-primary: oklch(0.66 0.12 180) !important;
+  --el-color-primary-light-3: oklch(0.66 0.12 180 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.66 0.12 180 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.66 0.12 180 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.66 0.12 180 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.66 0.12 180 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.58 0.12 180) !important;
+}
+
+/* 靛蓝主题 */
+[data-theme$="-indigo"] {
+  --theme-color-primary: oklch(0.52 0.14 270);
+  --theme-color-secondary: oklch(0.74 0.11 270);
+  --theme-color-tertiary: oklch(0.86 0.08 270);
+  --theme-color-primary-10: oklch(0.52 0.14 270 / 0.1);
+  --theme-color-primary-20: oklch(0.52 0.14 270 / 0.2);
+  --theme-color-primary-hover: oklch(0.46 0.14 270);
+  --el-color-primary: oklch(0.52 0.14 270) !important;
+  --el-color-primary-light-3: oklch(0.52 0.14 270 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.52 0.14 270 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.52 0.14 270 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.52 0.14 270 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.52 0.14 270 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.44 0.14 270) !important;
+}
+
+/* 青蓝主题 */
+[data-theme$="-cyan"] {
+  --theme-color-primary: oklch(0.70 0.10 210);
+  --theme-color-secondary: oklch(0.85 0.07 210);
+  --theme-color-tertiary: oklch(0.94 0.04 210);
+  --theme-color-primary-10: oklch(0.70 0.10 210 / 0.1);
+  --theme-color-primary-20: oklch(0.70 0.10 210 / 0.2);
+  --theme-color-primary-hover: oklch(0.64 0.10 210);
+  --el-color-primary: oklch(0.70 0.10 210) !important;
+  --el-color-primary-light-3: oklch(0.70 0.10 210 / 0.7) !important;
+  --el-color-primary-light-5: oklch(0.70 0.10 210 / 0.5) !important;
+  --el-color-primary-light-7: oklch(0.70 0.10 210 / 0.3) !important;
+  --el-color-primary-light-8: oklch(0.70 0.10 210 / 0.2) !important;
+  --el-color-primary-light-9: oklch(0.70 0.10 210 / 0.1) !important;
+  --el-color-primary-dark-2: oklch(0.62 0.10 210) !important;
 }

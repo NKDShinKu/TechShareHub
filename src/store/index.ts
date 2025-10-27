@@ -1,9 +1,22 @@
-import { defineStore } from 'pinia'
+/**
+ * Store 统一导出
+ * 
+ * 使用方式:
+ * import { useThemeStore, useUserStore } from '@/store'
+ */
 
-//  `defineStore()` 的返回值的命名是自由的
-// 但最好含有 store 的名字，且以 `use` 开头，以 `Store` 结尾。
-// (比如 `useUserStore`，`useCartStore`，`useProductStore`)
-// 第一个参数是你的应用中 Store 的唯一 ID。
-export const useAlertsStore = defineStore('alerts', {
-  // 其他配置...
-})
+// 主题管理
+export { useThemeStore } from './modules/theme'
+export type { ThemeState, ThemeMode, ThemeColor } from './modules/theme'
+
+// 用户管理
+export { useUserStore, UserRole } from './modules/user'
+export type { 
+  UserInfo, 
+  LoginParams, 
+  RegisterParams,
+  UserRole as UserRoleType
+} from './modules/user'
+
+// 如果有其他 store 模块，在这里导出
+// export { useOtherStore } from './modules/other'

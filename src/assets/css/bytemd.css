@@ -1,0 +1,156 @@
+:deep(.bytemd-toolbar) {
+  background: var(--color-bg-secondary) !important;
+  border-bottom: 1px solid var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-toolbar:hover) {
+  background: var(--color-bg-secondary) !important;
+  border-bottom: 1px solid var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-toolbar-icon) {
+  color: var(--color-font-secondary) !important;
+}
+
+:deep(.bytemd-toolbar-icon:hover) {
+  background: var(--color-bg-tertiary) !important;
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.bytemd-toolbar-icon.bytemd-toolbar-icon-active) {
+  color: var(--color-theme-primary) !important;
+  background: var(--color-theme-primary-10) !important;
+}
+
+:deep(.CodeMirror) {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.CodeMirror-gutters) {
+  background: var(--color-bg-secondary) !important;
+  border-right: 1px solid var(--color-border-primary) !important;
+}
+
+:deep(.CodeMirror-linenumber) {
+  color: var(--color-font-tertiary) !important;
+}
+
+:deep(.CodeMirror-cursor) {
+  border-left-color: var(--color-font-primary) !important;
+}
+
+:deep(.CodeMirror-selected) {
+  background: var(--color-theme-primary-20) !important;
+}
+
+:deep(.bytemd-split .bytemd-preview) {
+  background: var(--color-bg-secondary) !important;
+  border-color: var(--color-border-primary) !important;
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.bytemd-preview h1),
+:deep(.bytemd-preview h2),
+:deep(.bytemd-preview h3),
+:deep(.bytemd-preview h4),
+:deep(.bytemd-preview h5),
+:deep(.bytemd-preview h6) {
+  color: var(--color-font-primary) !important;
+  border-bottom-color: var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-preview p),
+:deep(.bytemd-preview li),
+:deep(.bytemd-preview td),
+:deep(.bytemd-preview th) {
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.bytemd-preview a) {
+  color: var(--color-theme-primary) !important;
+}
+
+:deep(.bytemd-preview a:hover) {
+  color: var(--color-theme-primary-hover) !important;
+}
+
+:deep(.bytemd-preview code) {
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-theme-primary) !important;
+  border: 1px solid var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-preview pre) {
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-preview pre code) {
+  background: transparent !important;
+  border: none !important;
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.bytemd-preview blockquote) {
+  border-left-color: var(--color-border-primary) !important;
+  color: var(--color-font-secondary) !important;
+  background: var(--color-bg-secondary) !important;
+}
+
+:deep(.bytemd-preview table) {
+  border-color: var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-preview table th),
+:deep(.bytemd-preview table td) {
+  border-color: var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-preview table thead tr) {
+  background: var(--color-bg-secondary) !important;
+}
+
+:deep(.bytemd-preview table tbody tr) {
+  background: var(--color-bg-secondary) !important;
+}
+:deep(.bytemd-preview table tbody tr:hover) {
+  background: var(--color-bg-secondary) !important;
+}
+
+:deep(.bytemd-preview hr) {
+  border-color: var(--color-border-primary) !important;
+}
+
+:deep(.bytemd-status) {
+  background: var(--color-bg-secondary) !important;
+  border-top: 1px solid var(--color-border-primary) !important;
+  color: var(--color-font-tertiary) !important;
+}
+
+:deep(.bytemd-status-right) {
+  color: var(--color-font-tertiary) !important;
+}
+
+:deep(.bytemd-dropdown) {
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border-primary) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+:deep(.bytemd-dropdown-item) {
+  color: var(--color-font-primary) !important;
+}
+
+:deep(.bytemd-dropdown-item:hover) {
+  background: var(--color-bg-secondary) !important;
+}
+
+:deep(.bytemd-dropdown-item-active) {
+  background: var(--color-theme-primary-10) !important;
+  color: var(--color-theme-primary) !important;
+}
+
+:deep(.bytemd-fullscreen.bytemd) {
+  z-index: 1000;
+}

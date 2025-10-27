@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router'
+import { ElMessage } from 'element-plus'
+import { useUserStore, UserRole } from '@/store'
 
 // 自定义 route meta 类型
 type AppRouteMeta = {
@@ -185,29 +187,36 @@ const router = createRouter({
   routes
 })
 
-// 简单的认证检查函数（占位）：
-// 推荐替换为 Pinia 中的 user store 或更完善的 auth 服务
-function isAuthenticated(): boolean {
-  try {
-    return !!localStorage.getItem('auth_token')
-  } catch (e) {
-    return false
-  }
-}
-
-// 全局前置守卫：设置页面 title，并进行简单权限校验
+// 全局前置守卫：设置页面 title，并进行权限校验
 router.beforeEach((to, _from, next) => {
+  const userStore = useUserStore()
   const meta = to.meta as AppRouteMeta | undefined
-  // 设置 document.title（可根据需要格式化）
+  
+  // 设置 document.title
   if (meta?.title) {
     document.title = `${meta.title} - TechShareHub`
   }
 
-  // 简单权限校验
-  if (meta?.requiresAuth && !isAuthenticated()) {
-    // 未登录则重定向到登录页，并保留目标路径
-    ElMessage.error('请先登录以访问该页面')
-    return next({ name: 'Login', query: { redirect: to.fullPath } })
+  // 权限校验
+  if (meta?.requiresAuth) {
+    if (!userStore.isLoggedIn) {
+      // 未登录则重定向到登录页，并保留目标路径
+      ElMessage.error('请先登录以访问该页面')
+      return next({ name: 'Login', query: { redirect: to.fullPath } })
+    }
+
+    // 角色权限校验
+    if (meta.roles && meta.roles.length > 0) {
+      const hasRole = meta.roles.some(role => {
+        if (role === UserRole.ADMIN) return userStore.isAdmin
+        return userStore.role === role
+      })
+
+      if (!hasRole) {
+        ElMessage.error('您没有权限访问该页面')
+        return next({ name: 'Home' })
+      }
+    }
   }
 
   return next()

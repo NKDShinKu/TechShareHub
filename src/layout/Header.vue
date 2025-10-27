@@ -1,19 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import NavItem from './components/NavItem.vue'
 import SearchBox from './components/SearchBox.vue'
 import UserMenu from './components/UserMenu.vue'
+import AuthDialog from './components/AuthDialog.vue'
 import { useHeaderVisibility } from '@/composables/useScrollUtils'
+import { useUserStore } from '@/store'
+import { useRouter } from 'vue-router'
 
 // 使用 Header 显隐逻辑
-const { isScrollUp } = useHeaderVisibility(900) // 滚动 900px 后触发
+const { isScrollUp } = useHeaderVisibility(900)
 
-// 模拟当前用户状态
-const currentUser = ref({
-  id: '123',
-  name: '张三',
-  isLoggedIn: true
-})
+// 使用用户 store
+const userStore = useUserStore()
+const router = useRouter()
+
+// 显示登录对话框
+const showAuthDialog = ref(false)
+const authDialogMode = ref<'login' | 'register'>('login')
+
+// 打开登录/注册对话框
+const openAuthDialog = () => {
+  showAuthDialog.value = true
+}
+
+// 登录成功回调
+const handleAuthSuccess = () => {
+  // 可以在这里做一些额外的处理，比如跳转到特定页面
+  console.log('登录成功，当前用户:', userStore.userInfo)
+}
 
 // 导航菜单配置
 const navItems = [
@@ -24,28 +39,28 @@ const navItems = [
 ]
 
 // 用户菜单配置
-const userMenuItems = [
+const userMenuItems = computed(() => [
   {
     label: '我的文章',
-    to: `/user/${currentUser.value.id}/articles`,
+    to: `/user/${userStore.userId}/articles`,
     icon: 'icon-[material-symbols--person-outline]',
     type: 'normal' as const
   },
   {
     label: '浏览历史',
-    to: `/user/${currentUser.value.id}/history`,
+    to: `/user/${userStore.userId}/history`,
     icon: 'icon-[material-symbols--history]',
     type: 'normal' as const
   },
   {
     label: '我的收藏',
-    to: `/user/${currentUser.value.id}/favorites`,
+    to: `/user/${userStore.userId}/favorites`,
     icon: 'icon-[mdi--bookmark-outline]',
     type: 'normal' as const
   },
   {
     label: '我的点赞',
-    to: `/user/${currentUser.value.id}/likes`,
+    to: `/user/${userStore.userId}/likes`,
     icon: 'icon-[mingcute--thumb-up-line]',
     type: 'normal' as const
   },
@@ -62,17 +77,44 @@ const userMenuItems = [
   },
   {
     label: '退出登录',
-    to: '/login',
     icon: 'icon-[material-symbols--logout]',
-    type: 'danger' as const
+    type: 'danger' as const,
+    action: handleLogout
   }
-]
+])
+
+// 处理退出登录
+async function handleLogout() {
+  try {
+    await ElMessageBox.confirm('确定要退出登录吗？', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+
+    const success = await userStore.logout()
+    if (success) {
+      ElMessage.success('已退出登录')
+      router.push('/home')
+    }
+  } catch {
+    // 用户取消
+  }
+}
 
 // 搜索处理
 const handleSearch = (query: string) => {
   console.log('搜索：', query)
   // 这里可以实现搜索逻辑
 }
+
+// 当前用户数据（用于 UserMenu）
+const currentUser = computed(() => ({
+  id: userStore.userId,
+  name: userStore.nickname || '用户',
+  isLoggedIn: userStore.isLoggedIn,
+  avatar: userStore.avatar
+}))
 </script>
 
 <template>
@@ -98,15 +140,19 @@ const handleSearch = (query: string) => {
         <SearchBox @search="handleSearch" />
 
         <!-- 用户区域 -->
-        <div class="flex items-center">
+        <div class="flex items-center gap-3">
           <!-- 已登录状态 -->
           <UserMenu v-if="currentUser.isLoggedIn" :user="currentUser" :menu-items="userMenuItems" />
 
           <!-- 未登录状态 -->
-          <router-link v-else to="/login"
-            class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-theme-primary hover:bg-theme-primary-hover transition-colors">
-            登录
-          </router-link>
+          <template v-else>
+            <button
+              @click="openAuthDialog"
+              class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-theme-primary hover:bg-theme-primary-hover transition-colors"
+            >
+              登录 / 注册
+            </button>
+          </template>
         </div>
 
         <!-- 移动端菜单按钮 -->
@@ -115,6 +161,13 @@ const handleSearch = (query: string) => {
         </button>
       </div>
     </div>
+
+    <!-- 登录/注册对话框 -->
+    <AuthDialog
+      v-model="showAuthDialog"
+      :default-mode="authDialogMode"
+      @success="handleAuthSuccess"
+    />
   </header>
 </template>
 

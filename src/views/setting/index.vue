@@ -3,6 +3,7 @@ defineOptions({ name: 'SettingPage' })
 
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import CommonCard from '@/components/CommonCard.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,19 +14,19 @@ const menuItems = [
     key: 'profile',
     label: '个人资料',
     path: '/setting/profile',
-    icon: '👤'
+    icon: 'icon-[mdi--account-circle-outline]'
   },
   {
     key: 'account',
     label: '账户设置',
     path: '/setting/account',
-    icon: '🔧'
+    icon: 'icon-[mdi--cog-outline]'
   },
   {
     key: 'theme',
     label: '主题设置',
     path: '/setting/theme',
-    icon: '🎨'
+    icon: 'icon-[mdi--palette-outline]'
   }
 ]
 
@@ -42,125 +43,40 @@ const switchMenu = (item: typeof menuItems[0]) => {
 </script>
 
 <template>
-  <div class="setting-container">
-    <!-- 侧边菜单 -->
-    <div class="setting-sidebar">
-      <div class="sidebar-header">
-        <h2>设置</h2>
+  <div class="p-4 max-w-screen-2xl mx-auto">
+    <div class="flex items-start gap-6 min-h-[calc(100vh-2rem)]">
+      <!-- 左侧菜单 -->
+      <div class="w-60 shrink-0 sticky top-18">
+        <CommonCard padding="p-1">
+          <div class="setting-menu">
+            <div
+              v-for="item in menuItems"
+              :key="item.key"
+              class="flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors border-b border-border-secondary last:border-b-0"
+              :class="activeMenu === item.key ? 'bg-theme-primary-10 border-l-4 border-l-theme-primary text-theme-primary' : 'text-font-secondary hover:bg-bg-secondary'"
+              @click="switchMenu(item)"
+            >
+              <span :class="item.icon" class="w-5 h-5"></span>
+              <span class="font-medium">{{ item.label }}</span>
+            </div>
+          </div>
+        </CommonCard>
       </div>
-      
-      <nav class="sidebar-menu">
-        <div v-for="item in menuItems" 
-             :key="item.key"
-             class="menu-item"
-             :class="{ active: activeMenu === item.key }"
-             @click="switchMenu(item)">
-          <span class="menu-icon">{{ item.icon }}</span>
-          <span class="menu-label">{{ item.label }}</span>
-        </div>
-      </nav>
-    </div>
-    
-    <!-- 主内容区 -->
-    <div class="setting-content">
-      <router-view />
+
+      <!-- 右侧内容区 -->
+      <div class="flex-1 min-w-0">
+        <router-view />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.setting-container {
-  display: flex;
-  min-height: 100vh;
-  background: #f8f9fa;
+.setting-menu > div {
+  position: relative;
 }
 
-.setting-sidebar {
-  width: 250px;
-  background: #fff;
-  border-right: 1px solid #e0e0e0;
-  flex-shrink: 0;
-}
-
-.sidebar-header {
-  padding: 2rem 1.5rem 1rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.sidebar-header h2 {
-  margin: 0;
-  color: #333;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.sidebar-menu {
-  padding: 1rem 0;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  border-left: 3px solid transparent;
-}
-
-.menu-item:hover {
-  background: #f8f9fa;
-}
-
-.menu-item.active {
-  background: #e3f2fd;
-  border-left-color: #007bff;
-  color: #007bff;
-}
-
-.menu-icon {
-  font-size: 1.2rem;
-  width: 20px;
-  text-align: center;
-}
-
-.menu-label {
-  font-weight: 500;
-}
-
-.setting-content {
-  flex: 1;
-  overflow: auto;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .setting-container {
-    flex-direction: column;
-  }
-  
-  .setting-sidebar {
-    width: 100%;
-  }
-  
-  .sidebar-menu {
-    display: flex;
-    overflow-x: auto;
-    padding: 0.5rem;
-  }
-  
-  .menu-item {
-    flex-direction: column;
-    min-width: 80px;
-    text-align: center;
-    padding: 0.5rem;
-    border-left: none;
-    border-bottom: 3px solid transparent;
-  }
-  
-  .menu-item.active {
-    border-left: none;
-    border-bottom-color: #007bff;
-  }
+.setting-menu > div.bg-theme-primary-10 {
+  border-left: 4px solid var(--theme-color-primary);
 }
 </style>

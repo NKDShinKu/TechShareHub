@@ -374,6 +374,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+@import '@/assets/css/bytemd.css';
 .bytemd-container {
   height: 100%;
 }
@@ -382,9 +383,8 @@ onUnmounted(() => {
 :deep(.bytemd) {
   height: calc(100vh - 10.5rem);
   border: none;
-}
-
-:deep(.bytemd-fullscreen.bytemd) {
-  z-index: 1000;
+  background: var(--color-bg-secondary) !important;
+  color: var(--color-font-primary) !important;
+  border-color: var(--color-border-primary) !important;
 }
 </style>
