@@ -3,7 +3,8 @@ defineOptions({ name: 'HomeCategoryPage' })
 
 import { ref, computed, watchEffect } from 'vue'
 import CommonCard from '@/components/CommonCard.vue'
-import NoteList from '@/components/NoteList.vue'
+import NoteList from './components/NoteList.vue'
+import router from '@/router'
 
 // 接收路由参数
 const props = defineProps<{
@@ -153,6 +154,7 @@ const handleTabChange = (tabKey: string) => {
 const handleNoteClick = (noteId: string) => {
   console.log('点击笔记:', noteId)
   // 这里可以导航到笔记详情页
+  router.push(`/detail/${noteId}`)
 }
 
 // 监听分类变化

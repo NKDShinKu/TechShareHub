@@ -60,6 +60,10 @@
   border-bottom-color: var(--color-border-primary) !important;
 }
 
+:deep(.cm-s-default .cm-header) {
+  color: var(--color-theme-primary) !important;
+}
+
 :deep(.bytemd-preview p),
 :deep(.bytemd-preview li),
 :deep(.bytemd-preview td),
